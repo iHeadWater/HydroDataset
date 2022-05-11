@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ebab5d92-c3aa-4ffa-b167-9b149fed0313" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/test/test_download_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_download_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
