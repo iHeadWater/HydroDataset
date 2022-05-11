@@ -53,23 +53,6 @@ def test_read_daymet_1basin_3days(save_dir):
     daily.to_netcdf(save_path)
 
 
-def test_read_daymet_1basin_in_camels_2days(camels, save_dir):
-    basin_id = "01013500"
-    dates = ("2000-01-01", "2000-01-02")
-    camels_shp_file = camels.dataset_description["CAMELS_BASINS_SHP_FILE"]
-    camels_shp = gpd.read_file(camels_shp_file)
-    # transform the geographic coordinates to wgs84 i.e. epsg4326  it seems NAD83 is equal to WGS1984 in geopandas
-    camels_shp_epsg4326 = camels_shp.to_crs(epsg=4326)
-    geometry = camels_shp_epsg4326[
-        camels_shp_epsg4326["hru_id"] == int(basin_id)
-    ].geometry[0]
-    # ``tmin``, ``tmax``, ``prcp``, ``srad``, ``vp``, ``swe``, ``dayl``
-    var = ["dayl", "prcp", "srad", "swe", "tmax", "tmin", "vp"]
-    daily = daymet.get_bygeom(geometry, dates, variables=var, pet=True)
-    save_path = os.path.join(save_dir, basin_id + "_in_camels_2000_01_01-02.nc")
-    daily.to_netcdf(save_path)
-
-
 def test_read_daymet_basins_3days(var, save_dir):
     basin_id = ["01013500", "01031500"]
     dates = ("2000-01-01", "2000-01-03")
@@ -88,10 +71,6 @@ def test_download_nldi_shpfile(save_dir):
     save_path = os.path.join(save_dir, basin_id + ".shp")
     basin.to_file(save_path)
 
-
-
-
-
 def test_equal_local_shp_download_shp_nc(save_dir):
     basin_id = "01013500"
     read_path = os.path.join(save_dir, basin_id + "_2000_01_01-03_nomask.nc")
@@ -109,12 +88,4 @@ def test_batch_download_nldi_shpfile(save_dir):
     save_path = os.path.join(save_dir, "two_test_basins.shp")
     basins.to_file(save_path)
 
-def test_download_usgs_streamflow(camels):
-    sites_id = camels.read_object_ids().tolist()
-    date_range = ("2015-01-01", "2021-12-31")
-    gage_dict = camels.camels_sites
-    save_dir = os.path.join("test_data", "camels_streamflow")
-    unit = "cfs"
-    qobs = read_usgs_daily_flow(sites_id, date_range, gage_dict, save_dir, unit)
-    print(qobs)
 
